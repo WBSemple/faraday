@@ -13,7 +13,11 @@
    [joda-time           "2.12.5"]
    [commons-logging     "1.2"]
    [com.amazonaws/aws-java-sdk-dynamodb "1.12.693"
-    :exclusions [joda-time commons-logging]]]
+    :exclusions [joda-time commons-logging]]
+   [com.cognitect.aws/api "0.8.741"]
+   [com.cognitect.aws/dynamodb "871.2.31.23"]
+   [com.cognitect.aws/endpoints "871.2.31.23"]
+   [com.cognitect.aws/streams-dynamodb "871.2.29.35"]]
 
   :test-paths ["test" #_"src"]
 
