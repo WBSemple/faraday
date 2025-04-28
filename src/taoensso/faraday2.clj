@@ -34,3 +34,20 @@
 (defn- db-streams-client ^Client
   [client-opts]
   (db-streams-client* client-opts))
+
+(defn list-tables
+  "Returns a lazy sequence of table names."
+  [client-opts]
+  (let [step
+        (fn step [^String offset]
+          (lazy-seq
+            (let [client (db-client client-opts)
+                  result (if (nil? offset)
+                           (aws/invoke client {:op :ListTables})
+                           (aws/invoke client {:op :ListTables :request {:ExclusiveStartTableName offset}}))
+                  last-key (:LastEvaluatedTableName result)
+                  chunk (map keyword (:TableNames result))]
+              (if last-key
+                (concat chunk (step (name last-key)))
+                chunk))))]
+    (step nil)))
