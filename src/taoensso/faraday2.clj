@@ -3,7 +3,7 @@
   (:require [cognitect.aws.client.api :as aws])
   (:import [cognitect.aws.client.impl Client]))
 
-(def ^:private db-client*
+(defn- db-client*
   "Returns a Client instance for the supplied client opts:
     (db-client* {:credentials-provider (cognitect.aws.credentials/basic-credentials-provider
                                          {:access-key-id \"ABC\"
@@ -12,10 +12,10 @@
                                          \"myprofile\")})
 
   See https://github.com/cognitect-labs/aws-api#credentials"
-  (memoize (fn [client-opts]
-             (aws/client (assoc client-opts :api :dynamodb)))))
+  [client-opts]
+  (aws/client (assoc client-opts :api :dynamodb)))
 
-(def ^:private db-streams-client*
+(defn- db-streams-client*
   "Returns a Client instance for the supplied client opts:
     (db-streams-client* {:credentials-provider (cognitect.aws.credentials/basic-credentials-provider
                                                  {:access-key-id \"ABC\"
@@ -24,8 +24,8 @@
                                                  \"myprofile\")})
 
   See https://github.com/cognitect-labs/aws-api#credentials"
-  (memoize (fn [client-opts]
-             (aws/client (assoc client-opts :api :streams-dynamodb)))))
+  [client-opts]
+  (aws/client (assoc client-opts :api :streams-dynamodb)))
 
 (defn- db-client ^Client
   [{:keys [client] :as client-opts}]
