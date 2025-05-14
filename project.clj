@@ -13,7 +13,8 @@
    [joda-time           "2.12.5"]
    [commons-logging     "1.2"]
    [com.amazonaws/aws-java-sdk-dynamodb "1.12.693"
-    :exclusions [joda-time commons-logging]]]
+    :exclusions [joda-time commons-logging]]
+   [software.amazon.awssdk/dynamodb "2.31.59"]]
 
   :test-paths ["test" #_"src"]
 
