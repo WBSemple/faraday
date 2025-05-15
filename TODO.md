@@ -29,7 +29,7 @@
 
 - [x] Client/credentials
 - [ ] Non-blocking operations support
-- [ ] Readme documentation
+- [x] Readme documentation
 
 ### Migrate faraday 1 api
 

@@ -24,7 +24,7 @@ Add Faraday as a dependency to your project and import faraday into your namespa
 
 ```clojure
 (ns my-ns
- (:require [taoensso.faraday :as far]))
+ (:require [taoensso.faraday2 :as far]))
 ```
 
 ### Preparing a database
@@ -54,21 +54,40 @@ Ready?
 
 ### Connecting
 
+Faraday uses an underlying [aws-api](https://github.com/cognitect-labs/aws-api) client. The `client-ops` param
+corresponds exactly to the config map passed to `cognitect.aws.client.api/client` with the additional option of passing
+in your own `:client` (e.g. if you want to manage this in application lifecycle).
+
+The aws-api [credentials docs](https://github.com/cognitect-labs/aws-api#credentials) should be referred to for full
+details, though some examples are provided below.
+
 ```clojure
+(require '[cognitect.aws.client.api :as aws]
+         '[cognitect.aws.credentials :as credentials]
+         '[taoensso.faraday2 :as far])
+
+{:credentials-provider (credentials/basic-credentials-provider
+                         {:access-key-id (or (get (System/getenv) "AWS_DYNAMODB_ACCESS_KEY") "test")
+                          :secret-access-key (or (get (System/getenv) "AWS_DYNAMODB_SECRET_KEY") "test")})
+ :endpoint-override {:protocol (keyword (.getProtocol url))
+                     :hostname (.getHost url)
+                     :port (.getPort url)}
+ :region "eu-west-2"}
+
 (def client-opts
-  {;;; For DynamoDB Local just use some random strings here, otherwise include your
-   ;;; production IAM keys:
-   :access-key "<AWS_DYNAMODB_ACCESS_KEY>"
-   :secret-key "<AWS_DYNAMODB_SECRET_KEY>"
+  {:credentials-provider (credentials/basic-credentials-provider
+                           ;;; For DynamoDB Local just use some random strings here, otherwise include your
+                           ;;; production IAM keys:
+                           {:access-key-id (or (get (System/getenv) "AWS_DYNAMODB_ACCESS_KEY") "test")
+                            :secret-access-key (or (get (System/getenv) "AWS_DYNAMODB_SECRET_KEY") "test")})
 
    ;;; You may optionally override the default endpoint if you'd like to use DynamoDB
    ;;; Local or a different AWS Region (Ref. http://goo.gl/YmV80o), etc.:
-   ;; :endpoint "http://localhost:8000"                   ; For DynamoDB Local
-   ;; :endpoint "http://dynamodb.eu-west-1.amazonaws.com" ; For EU West 1 AWS region
+   ;; :endpoint-override {:protocol :http :hostname "localhost" :port 8000} ; For DynamoDB Local
+   ;; :endpoint-override {:protocol :http :hostname "dynamodb.eu-west-1.amazonaws.com"} ; For EU West 1 AWS region
 
-   ;;; You may optionally provide your own (pre-configured) instance of the Amazon
-   ;;; DynamoDB client for Faraday functions to use.
-   ;; :client (AmazonDynamoDBClientBuilder/defaultClient)
+   ;;; You may optionally provide your own (pre-configured) instance of the aws-api client for Faraday functions to use.
+   ;; :client (aws/client {:api :dynamo ...})
   })
 
 (far/list-tables client-opts)
@@ -137,7 +156,7 @@ lein test
 Or run tests from a REPL like:
 
 ```clj
-taoensso.faraday.tests.main> (clojure.test/run-tests)
+taoensso.faraday2.tests.main> (clojure.test/run-tests)
 ```
 
 To run the entire test suite against all supported versions of Clojure, use:
