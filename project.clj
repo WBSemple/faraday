@@ -10,10 +10,6 @@
   :dependencies
   [[com.taoensso/encore "3.112.0"]
    [com.taoensso/nippy  "3.4.2"]
-   [joda-time           "2.12.5"]
-   [commons-logging     "1.2"]
-   [com.amazonaws/aws-java-sdk-dynamodb "1.12.693"
-    :exclusions [joda-time commons-logging]]
    [com.cognitect.aws/api "0.8.741"]
    [com.cognitect.aws/dynamodb "871.2.31.23"]
    [com.cognitect.aws/endpoints "871.2.31.23"]
@@ -47,8 +43,7 @@
      *unchecked-math*     false #_:warn-on-boxed}
 
     :dependencies
-    [[org.testcontainers/testcontainers "1.19.1"
-      :exclusions [com.fasterxml.jackson.core/jackson-annotations]]
+    [[org.testcontainers/testcontainers "1.19.1"]
      [org.slf4j/slf4j-simple "1.7.36"]]
 
     :plugins
