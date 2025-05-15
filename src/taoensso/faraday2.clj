@@ -68,6 +68,7 @@
   [response]
   (when (or (some-> (:cognitect.aws.http/status response) (>= 400))
             (:cognitect.anomalies/category response))
+    (some-> (:cognitect.aws/throwable response) throw)
     (let [message (error-response->message response)]
       (throw (case (:cognitect.aws.error/code response)
                "ConditionalCheckFailedException" (ConditionalCheckFailedException. message response)
