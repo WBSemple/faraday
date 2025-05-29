@@ -143,6 +143,14 @@ Most of this stuff is controlled through optional arguments and is pretty easy t
 
 You can also check out the [official AWS DynamoDB documentation](http://aws.amazon.com/documentation/dynamodb/), though there's a lot of Java-land complexity that you won't need to deal with when using Faraday. The most useful single doc is probably on the [DynamoDB data model](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DataModel.html) and the [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html).
 
+## Upgrading to Faraday 2
+
+Faraday 1.x is dependent on v1 of the AWS Java SDK which will reach end-of-support on 2025-12-31. Consider the following breaking changes when upgrading:
+
+ * The whole API has moved to the `faraday2` namespace
+ * Client configuration/credentials must be replaced with config suitable for the underlying aws-api (see [connecting](#connecting))
+ * Any handling of exceptions from the v1 SDK must be replaced with new Faraday equivalents (e.g. `com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException` -> `taoensso.faraday.ConditionalCheckFailedException`), though use of `taoensso.faraday/ex` can simply be replaced with `taoensso.faraday2/ex`
+
 ## Development
 
 This project uses [Testcontainers](https://www.testcontainers.org/) to manage starting and stopping a local DynamoDB instance in docker.
