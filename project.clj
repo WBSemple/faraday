@@ -12,8 +12,6 @@
    [com.taoensso/nippy  "3.4.2"]
    [joda-time           "2.12.5"]
    [commons-logging     "1.2"]
-   [com.amazonaws/aws-java-sdk-dynamodb "1.12.693"
-    :exclusions [joda-time commons-logging]]
    [software.amazon.awssdk/dynamodb "2.31.59"]]
 
   :test-paths ["test" #_"src"]
@@ -43,8 +41,7 @@
      *unchecked-math*     false #_:warn-on-boxed}
 
     :dependencies
-    [[org.testcontainers/testcontainers "1.19.1"
-      :exclusions [com.fasterxml.jackson.core/jackson-annotations]]
+    [[org.testcontainers/testcontainers "1.19.1"]
      [org.slf4j/slf4j-simple "1.7.36"]]
 
     :plugins
