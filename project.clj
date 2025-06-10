@@ -10,8 +10,6 @@
   :dependencies
   [[com.taoensso/encore "3.112.0"]
    [com.taoensso/nippy  "3.4.2"]
-   [joda-time           "2.12.5"]
-   [commons-logging     "1.2"]
    [software.amazon.awssdk/dynamodb "2.31.59"]]
 
   :test-paths ["test" #_"src"]
