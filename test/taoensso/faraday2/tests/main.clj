@@ -6,7 +6,6 @@
   (:import [java.util Date]
            [org.testcontainers.containers GenericContainer]
            [software.amazon.awssdk.auth.credentials AwsBasicCredentials StaticCredentialsProvider]
-           [software.amazon.awssdk.services.dynamodb DynamoDbClient]
            [software.amazon.awssdk.services.dynamodb.model ConditionalCheckFailedException DynamoDbException TransactionCanceledException]))
 
 (defmethod clojure.test/report :begin-test-var [m]
@@ -21,7 +20,8 @@
 (def ^:dynamic *client-opts*
   {:access-key (or (get (System/getenv) "AWS_DYNAMODB_ACCESS_KEY") "test")
    :secret-key (or (get (System/getenv) "AWS_DYNAMODB_SECRET_KEY") "test")
-   :endpoint (or (get (System/getenv) "AWS_DYNAMODB_ENDPOINT") "http://localhost:6798")})
+   :endpoint (or (get (System/getenv) "AWS_DYNAMODB_ENDPOINT") "http://localhost:6798")
+   :region "local"})
 
 (defn- dynamodb-local
   [t]
@@ -852,7 +852,8 @@
           provider (StaticCredentialsProvider/create creds)]
 
       (binding [*client-opts* {:provider provider
-                               :endpoint endpoint}]
+                               :endpoint endpoint
+                               :region "local"}]
 
         (testing "Batch put"
           (is (= [i0 i1 nil]
