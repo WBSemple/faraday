@@ -147,7 +147,7 @@ lein test
 Or run tests from a REPL like:
 
 ```clj
-taoensso.faraday.tests.main> (clojure.test/run-tests)
+taoensso.faraday2.tests.main> (clojure.test/run-tests)
 ```
 
 To run the entire test suite against all supported versions of Clojure, use:

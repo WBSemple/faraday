@@ -1,7 +1,7 @@
 (ns taoensso.faraday2.tests.requests
-  (:require [taoensso.faraday2 :as far]
-            [clojure.test :refer :all]
-            [taoensso.faraday.utils :as utils])
+  (:require [clojure.test :refer :all]
+            [taoensso.faraday2 :as far]
+            [taoensso.faraday2.utils :as utils])
   (:import [java.util Collection]
            [software.amazon.awssdk.services.dynamodb.model AttributeAction
                                                            AttributeValue

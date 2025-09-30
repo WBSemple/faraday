@@ -1,7 +1,7 @@
 (ns taoensso.faraday2
   (:require [clojure.string :as str]
             [taoensso.encore :as enc]
-            [taoensso.faraday.utils :as utils :refer [coll?*]]
+            [taoensso.faraday2.utils :as utils :refer [coll?*]]
             [taoensso.nippy :as nippy]
             [taoensso.nippy.tools :as nippy-tools])
   (:import [clojure.lang BigInt IPersistentVector Keyword LazySeq]

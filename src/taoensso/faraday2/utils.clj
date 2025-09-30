@@ -1,4 +1,4 @@
-(ns taoensso.faraday.utils
+(ns taoensso.faraday2.utils
   {:author "Peter Taoussanis"}
   (:require [clojure.string :as str])
   (:import [java.util Collections$UnmodifiableMap HashMap Map$Entry]
