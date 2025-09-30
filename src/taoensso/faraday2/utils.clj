@@ -11,26 +11,28 @@
                             (transient {}) m))))
 
 ;; Fix for clojure 1.10
-(extend-protocol clojure.core.protocols/IKVReduce
-  DefaultSdkAutoConstructMap
-  (kv-reduce
-    [amap f init]
-    (reduce (fn [ret ^Map$Entry me]
-              (f ret
-                 (.getKey me)
-                 (.getValue me)))
-            init
-            amap))
+(when (and (= (:major *clojure-version*) 1)
+           (<= (:minor *clojure-version*) 10))
+  (extend-protocol clojure.core.protocols/IKVReduce
+    DefaultSdkAutoConstructMap
+    (kv-reduce
+      [amap f init]
+      (reduce (fn [ret ^Map$Entry me]
+                (f ret
+                   (.getKey me)
+                   (.getValue me)))
+              init
+              amap))
 
-  Collections$UnmodifiableMap
-  (kv-reduce
-    [amap f init]
-    (reduce (fn [ret ^Map$Entry me]
-              (f ret
-                 (.getKey me)
-                 (.getValue me)))
-            init
-            amap)))
+    Collections$UnmodifiableMap
+    (kv-reduce
+      [amap f init]
+      (reduce (fn [ret ^Map$Entry me]
+                (f ret
+                   (.getKey me)
+                   (.getValue me)))
+              init
+              amap))))
 
 (defn keyword-map ([m] (keyword-map nil m)) ([vf m] (map-kvs keyword vf m)))
 (defn name-map    ([m] (name-map    nil m)) ([vf m] (map-kvs name    vf m)))
