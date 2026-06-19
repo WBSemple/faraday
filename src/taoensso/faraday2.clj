@@ -154,7 +154,7 @@
                                  proxy-password (.password proxy-password)
                                  :always (.build))))
 
-        http-client (when (or proxy-config max-conns socket-timeout keep-alive?)
+        http-client (when (or proxy-config conn-timeout max-conns socket-timeout keep-alive?)
                       (cond-> (ApacheHttpClient/builder)
                               proxy-config        (.proxyConfiguration proxy-config)
                               conn-timeout        (.connectionTimeout (Duration/ofMillis conn-timeout))
